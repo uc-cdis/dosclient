@@ -33,7 +33,7 @@ class DOSClient(object):
     def get(self, did):
         """Return a document object corresponding to a single did"""
         try:
-            response = self._get("/dataobjects/", did, headers=headers)
+            response = self._get("dataobjects", did)
         except requests.HTTPError as e:
             if e.response.status_code == 404:
                 return None
@@ -45,7 +45,7 @@ class DOSClient(object):
             return None
 
     def _get(self, *path, **kwargs):
-        resp = requests.get(self.url_for(*path), timeout=5, **kwargs)
+        resp = requests.get(self.url_for(*path), timeout=15, **kwargs)
         handle_error(resp)
         return resp
 
