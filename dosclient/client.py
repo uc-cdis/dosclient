@@ -99,7 +99,7 @@ class Document(object):
             self.file_name = json['name']
 
         if 'size' in json:
-            self.size = json['size']
+            self.size = int(json['size'])
 
         if 'aliases' in json:
             self.alias = json['aliases']
