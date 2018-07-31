@@ -84,11 +84,42 @@ class Document(object):
         self.urls = []
         if 'urls' in json:
             self.urls = [x['url'] for x in json['urls']]
+            self.urls_metadata = {x['url']: x['user_metadata'] for x in json['urls']}
+
         if 'version' in json:
-            self.updated_date = json['version']
+            self.rev = json['version']
+
+        if 'updated' in json:
+            self.updated_data = json['updated']
+
+        if 'created' in json:
+            self.created_data = json['created']
+
+        if 'name' in json:
+            self.file_name = json['name']
+
+        if 'size' in json:
+            self.size = json['size']
+
+        if 'aliases' in json:
+            self.alias = json['aliases']
+
         self.hashes = {}
         if 'checksums' in json:
             self.hashes = {x['type']: x['checksum'] for x in json['checksums']}
-        self.rev = None
-        self.size = None
+
         self._fetched = True
+
+    # parse out the urls
+    data_object['urls'] = []
+    for url in record['urls']:
+        url_object = {
+            'url': url }
+        if 'metadata' in record and record['metadata']:
+           url_object['system_metadata'] = record['metadata']
+        if 'urls_metadata' in record and url in record['urls_metadata'] and record['urls_metadata'][url]:
+            url_object['user_metadata'] = record['urls_metadata'][url]
+        data_object['urls'].append(url_object)
+
+    result = { "data_object": data_object }
+    return result
