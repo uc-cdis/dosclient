@@ -110,16 +110,3 @@ class Document(object):
 
         self._fetched = True
 
-    # parse out the urls
-    data_object['urls'] = []
-    for url in record['urls']:
-        url_object = {
-            'url': url }
-        if 'metadata' in record and record['metadata']:
-           url_object['system_metadata'] = record['metadata']
-        if 'urls_metadata' in record and url in record['urls_metadata'] and record['urls_metadata'][url]:
-            url_object['user_metadata'] = record['urls_metadata'][url]
-        data_object['urls'].append(url_object)
-
-    result = { "data_object": data_object }
-    return result
