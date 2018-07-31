@@ -55,6 +55,7 @@ class Document(object):
         self.client = client
         self.did = did
         self.urls = None
+        self.alias = None
         self.sha1 = None
         self._fetched = False
         self._load(json)
