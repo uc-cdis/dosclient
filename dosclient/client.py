@@ -84,7 +84,7 @@ class Document(object):
         self.urls = []
         if 'urls' in json:
             self.urls = [x['url'] for x in json['urls']]
-            self.urls_metadata = {x['url']: x['user_metadata'] for x in json['urls']}
+            self.urls_metadata = {x['url']:x['user_metadata'] for x in json['urls'] if 'user_metadata' in x}
 
         if 'version' in json:
             self.rev = json['version']
