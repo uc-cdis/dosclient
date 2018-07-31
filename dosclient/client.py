@@ -83,12 +83,30 @@ class Document(object):
         assert json["id"].lower() == self.did.lower()
         self.urls = []
         if 'urls' in json:
-            self.urls = [x['url'] for x in json['urls']]
+            self.urls = [x['url'] for x in json['urls'] if 'url' in x]
+            self.urls_metadata = {x['url']:x['user_metadata'] for x in json['urls'] if 'user_metadata' in x}
+
         if 'version' in json:
-            self.updated_date = json['version']
+            self.rev = json['version']
+
+        if 'updated' in json:
+            self.updated_data = json['updated']
+
+        if 'created' in json:
+            self.created_data = json['created']
+
+        if 'name' in json:
+            self.file_name = json['name']
+
+        if 'size' in json:
+            self.size = json['size']
+
+        if 'aliases' in json:
+            self.alias = json['aliases']
+
         self.hashes = {}
         if 'checksums' in json:
             self.hashes = {x['type']: x['checksum'] for x in json['checksums']}
-        self.rev = None
-        self.size = None
+
         self._fetched = True
+
