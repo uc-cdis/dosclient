@@ -55,6 +55,7 @@ class Document(object):
         self.client = client
         self.did = did
         self.urls = None
+        self.alias = None
         self.sha1 = None
         self._fetched = False
         self._load(json)
@@ -99,7 +100,7 @@ class Document(object):
             self.file_name = json['name']
 
         if 'size' in json:
-            self.size = json['size']
+            self.size = int(json['size'])
 
         if 'aliases' in json:
             self.alias = json['aliases']
