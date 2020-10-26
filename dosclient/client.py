@@ -1,4 +1,5 @@
 import json
+
 try:
     from urlparse import urljoin
 except ImportError:
@@ -23,7 +24,6 @@ def handle_error(resp):
 
 
 class DOSClient(object):
-
     def __init__(self, baseurl):
         self.url = baseurl
 
@@ -49,8 +49,8 @@ class DOSClient(object):
         handle_error(resp)
         return resp
 
-class Document(object):
 
+class Document(object):
     def __init__(self, client, did, json=None):
         self.client = client
         self.did = did
@@ -62,12 +62,10 @@ class Document(object):
 
     def _render(self, include_rev=True):
         if not self._fetched:
-            raise RuntimeError("Document must be fetched from server before being rendered as json")
-        json = {
-            "urls": self.urls,
-            "hashes": self.hashes,
-            "size": self.size
-        }
+            raise RuntimeError(
+                "Document must be fetched from server before being rendered as json"
+            )
+        json = {"urls": self.urls, "hashes": self.hashes, "size": self.size}
         if include_rev:
             json["rev"] = self.rev
         return json
@@ -83,31 +81,34 @@ class Document(object):
         json = json["data_object"]
         assert json["id"].lower() == self.did.lower()
         self.urls = []
-        if 'urls' in json:
-            self.urls = [x['url'] for x in json['urls'] if 'url' in x]
-            self.urls_metadata = {x['url']:x['user_metadata'] for x in json['urls'] if 'user_metadata' in x}
+        if "urls" in json:
+            self.urls = [x["url"] for x in json["urls"] if "url" in x]
+            self.urls_metadata = {
+                x["url"]: x["user_metadata"]
+                for x in json["urls"]
+                if "user_metadata" in x
+            }
 
-        if 'version' in json:
-            self.rev = json['version']
+        if "version" in json:
+            self.rev = json["version"]
 
-        if 'updated' in json:
-            self.updated_data = json['updated']
+        if "updated" in json:
+            self.updated_data = json["updated"]
 
-        if 'created' in json:
-            self.created_data = json['created']
+        if "created" in json:
+            self.created_data = json["created"]
 
-        if 'name' in json:
-            self.file_name = json['name']
+        if "name" in json:
+            self.file_name = json["name"]
 
-        if 'size' in json:
-            self.size = int(json['size'])
+        if "size" in json:
+            self.size = int(json["size"])
 
-        if 'aliases' in json:
-            self.alias = json['aliases']
+        if "aliases" in json:
+            self.alias = json["aliases"]
 
         self.hashes = {}
-        if 'checksums' in json:
-            self.hashes = {x['type']: x['checksum'] for x in json['checksums']}
+        if "checksums" in json:
+            self.hashes = {x["type"]: x["checksum"] for x in json["checksums"]}
 
         self._fetched = True
-

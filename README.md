@@ -4,5 +4,3 @@ DOSClient
 
 This is the client library for making requests to the GA4GH DOS
 compatible services and returning an Indexd compatible document.
-
-
