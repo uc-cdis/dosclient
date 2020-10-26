@@ -1,10 +1,12 @@
 import json
 
+
 def test_import():
-    '''
+    """
     Try to import the index package.
-    '''
+    """
     import dosclient
+
 
 def test_load1():
     """
@@ -17,6 +19,8 @@ def test_load1():
 
     from dosclient.client import DOSClient
     from dosclient.client import Document
+
     client = DOSClient("https://test.example/index")
-    doc = Document(client, "be07e9bd-f750-4686-9777-57edaad08ffb", json.loads(jsonstring))
-    
+    doc = Document(
+        client, "be07e9bd-f750-4686-9777-57edaad08ffb", json.loads(jsonstring)
+    )
